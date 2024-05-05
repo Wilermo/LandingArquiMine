@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormInfo} from "../../model/form-info";
+import {FormInfo} from "../../shared/model/service/form-info";
 import { LandingService } from 'src/app/shared/model/service/landing.service';
 
 @Component({
