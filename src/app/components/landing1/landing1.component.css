@@ -4,7 +4,7 @@ body {
 }
 
 header {
-    background-image: url('src/assets/fondo3.svg');
+    background-image: url('src/assets/header.svg');
     background-size: cover;
     padding-bottom: 200px;
 }
@@ -15,6 +15,7 @@ h1 {
     color: #E3E3E3;
     font-size: 64px;
     margin-top: 40px;
+    line-height: 1.2;
 }
 
 h6 {
