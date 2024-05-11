@@ -19,6 +19,6 @@ export class LandingService {
 
   sendFormInfo(info: FormInfo) : Observable<FormInfo>{
     console.log("SERB: ", info)
-    return this.http.post<FormInfo>("https://canelaapigatewayback-production.up.railway.app/form/send",info,this.httpOptions)
+    return this.http.post<FormInfo>("http://localhost:8762/form/send",info,this.httpOptions)
   }
 }
