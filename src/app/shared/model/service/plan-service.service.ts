@@ -7,9 +7,9 @@ import { plan } from '../entities/plan';
   providedIn: 'root'
 })
 export class PlanServiceService {
-  private apiUrl = 'https://66328febc51e14d69564cf84.mockapi.io/create-aspirantes/plan';
+  private apiUrl = 'canelaapigatewayback-qa.up.railway.app/plan/list';
   constructor(private http: HttpClient) { }
-  
+
   getPlanes(): Observable<plan[]> {
     return this.http.get<plan[]>(this.apiUrl);
   }
