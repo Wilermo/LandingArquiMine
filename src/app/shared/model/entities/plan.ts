@@ -1,8 +1,9 @@
 export interface plan{
-    id?: number; 
+    id?: number;
     name: string;
     description: string;
-    maxNumWorkers: number;
+    maxnumworkers: number;
     price: number;
     duration: number;
+    status: string;
 }
