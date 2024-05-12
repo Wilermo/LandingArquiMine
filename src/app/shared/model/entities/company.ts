@@ -1,13 +1,13 @@
 export interface company {
-    id?: number; 
-    nameCompany: string;
+    id?: number;
+    namecompany: string;
     nit: string;
-    nameLegalRepresentative: string;
+    namelegalrepresentative: string;
     email: string;
-    phoneCompany: number;
-    numWorkers: number;
+    phonecompany: number;
+    numworkers: number;
     address: string;
-    linkDate: Date;
-    subscriptionEndDate: Date;
+    linkdate: string;
+    subscriptionenddate: string;
     status: string;
 }

@@ -6,7 +6,7 @@ export class User {
     public username: string = '';
     public password: string = '';
     public role: string = 'ADMIN';
-  
+
     constructor();
     constructor(firstName: string, lastName: string, email: string, role: string, id?: string, username?: string, password?: string);
     constructor(firstName?: string, lastName?: string, email?: string, role?: string, id?: string, username?: string, password?: string) {
@@ -19,4 +19,3 @@ export class User {
       if (password) this.password = password;
     }
   }
-  
