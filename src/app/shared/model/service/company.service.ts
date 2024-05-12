@@ -8,12 +8,12 @@ import { Observable, of } from 'rxjs';
 })
 export class CompanyService {
 
-  private apiUrl = 'https://6632e432f7d50bbd9b47959d.mockapi.io/create-aspirantes/company';
+  private apiUrl = 'https://canelaapigatewayback-qa.up.railway.app/company/save';
   constructor(private http: HttpClient) { }
 
-  
+
   agregarCompany(company: company): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, company);
   }
-  
+
 }

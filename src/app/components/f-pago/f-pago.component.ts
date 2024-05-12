@@ -16,7 +16,7 @@ export class FPagoComponent {
   error_message: string = '';
   error: boolean = false;
   error_dict: { [key: number]: string } = {
-    400: 'Credenciales incorrectas',
+    400: 'Correo ya existente en el sistema',
     500: 'Error del servidor',
   };
   planId: string | null = null;
@@ -31,7 +31,8 @@ export class FPagoComponent {
     this.userService.createUser(this.nuevoUsuario).subscribe(
       (data: any) => {
         console.log("Respuesta del servidor:", data);
-        const usuario = data; 
+        const usuario = data;
+        this.nuevoUsuario.username = data
 
         this.userService.agregarUsuario(this.nuevoUsuario).subscribe(
           response => {
@@ -76,8 +77,8 @@ export class FPagoComponent {
   }
   showSuccessMessage() {
     this.snackBar.open('La convocatoria se agregó con éxito', 'Cerrar', {
-      duration: 3000, 
-      verticalPosition: 'top' 
+      duration: 3000,
+      verticalPosition: 'top'
     });
   }
 }
