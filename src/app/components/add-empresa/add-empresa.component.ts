@@ -25,20 +25,20 @@ export class AddEmpresaComponent {
     this.route.queryParams.subscribe(params => {
       const planId = params['planId'];
       console.log('Plan ID:', planId);
-  
+
       // Obtener el plan por ID
       if (planId) {
         this.planService.getPlan(+planId).subscribe(
           (plan: plan) => {
             console.log('Plan obtenido:', plan);
             this.plan = plan;
-  
-           
+
+
             if (this.plan && this.plan.duration) {
-              const subscriptionStartDate = new Date(); 
-              const subscriptionEndDate = new Date(subscriptionStartDate); 
-              subscriptionEndDate.setMonth(subscriptionEndDate.getMonth() + this.plan.duration); 
-              this.companyform.patchValue({ subscriptionEndDate }); 
+              const subscriptionStartDate = new Date();
+              const subscriptionEndDate = new Date(subscriptionStartDate);
+              subscriptionEndDate.setMonth(subscriptionEndDate.getMonth() + this.plan.duration);
+              this.companyform.patchValue({ subscriptionEndDate });
             }
           },
           error => {
@@ -47,7 +47,7 @@ export class AddEmpresaComponent {
         );
       }
     });
-    
+
     this.companyform.get('linkDate')?.disable();
     this.companyform.get('subscriptionEndDate')?.disable();
   }
@@ -61,29 +61,33 @@ export class AddEmpresaComponent {
     numWorkers: this.builder.control(0),
     status: this.builder.control('', Validators.required),
     address: this.builder.control('', Validators.required),
-    linkDate: [new Date(), Validators.required],
+    linkDate: [new Date().toLocaleDateString('es-CO'), Validators.required],
     subscriptionEndDate: [new Date(), Validators.required],
   });
 
-  
+
 
   SaveCompany() {
     if (this.companyform.valid) {
+
       const subscriptionEndDate: Date = this.companyform.value.subscriptionEndDate || new Date(); 
-  
+      const publishDateValue = this.companyform.value.linkDate;
+      const currentDate = publishDateValue ? new Date(publishDateValue) : new Date();
+
       const companyData: company = {
-        nameCompany: this.companyform.value.nameCompany || '',
+        namecompany: this.companyform.value.nameCompany || '',
         nit: this.companyform.value.nit || '',
-        nameLegalRepresentative: this.companyform.value.nameLegalRepresentative || '',
+        namelegalrepresentative: this.companyform.value.nameLegalRepresentative || '',
         email: this.companyform.value.email || '',
-        phoneCompany: this.companyform.value.phoneCompany || 0,
-        numWorkers: this.companyform.value.numWorkers || 0,
+        phonecompany: this.companyform.value.phoneCompany || 0,
+        numworkers: this.companyform.value.numWorkers || 0,
         status: this.companyform.value.status || '',
-        linkDate: new Date(),
-        subscriptionEndDate: subscriptionEndDate,
+
+        linkDate: currentDate.toJSON().slice(0, 10),
+        subscriptionEndDate: subscriptionEndDate.toJSON().slice(0, 10),
         address: this.companyform.value.address || '',
       };
-  
+
       this.companyService.agregarCompany(companyData).subscribe(
         response => {
           console.log('Empresa agregado correctamente:', companyData);
@@ -97,7 +101,7 @@ export class AddEmpresaComponent {
       console.log('Formulario inválido');
     }
   }
-  
+
 
   clearform() {
     this.companyform.reset();
