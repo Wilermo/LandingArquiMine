@@ -11,7 +11,8 @@ import { User } from '../auth/user';
 })
 export class CreateUserService {
 
-  private apiUrl = 'https://662dcbbda7dda1fa378b4cfc.mockapi.io/create-aspirantes/user';
+  private apiUrl = 'https://canelaapigatewayback-qa.up.railway.app/user/save';
+
   constructor(private http: HttpClient) { }
 
   createUser(user: User): Observable<User> {
@@ -20,7 +21,7 @@ export class CreateUserService {
       'Content-Type': 'application/json'
   });
 
-    return this.http.post<any>(url, user, { headers, responseType: 'text' as 'json' }); 
+    return this.http.post<any>(url, user, { headers, responseType: 'text' as 'json' });
   }
 
   agregarUsuario(usuario: User): Observable<any> {

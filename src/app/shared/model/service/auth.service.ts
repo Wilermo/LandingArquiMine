@@ -4,7 +4,7 @@ import { AuthenticationRequest } from '../auth/aut.req';
 import { TokenResponse } from '../auth/token';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../auth/user'; 
+import { User } from '../auth/user';
 import { tap } from 'rxjs/operators';
 import { encrypt } from '../../../utils/encrypt';
 

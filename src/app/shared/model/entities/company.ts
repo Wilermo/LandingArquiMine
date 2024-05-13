@@ -1,11 +1,11 @@
 export interface company {
-    id?: number; 
-    nameCompany: string;
+    id?: number;
+    namecompany: string;
     nit: string;
-    nameLegalRepresentative: string;
+    namelegalrepresentative: string;
     email: string;
-    phoneCompany: number;
-    numWorkers: number;
+    phonecompany: number;
+    numworkers: number;
     address: string;
     linkDate: string;
     subscriptionEndDate: string;
