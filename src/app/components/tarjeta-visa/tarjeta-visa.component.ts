@@ -24,7 +24,7 @@ export class TarjetaVisaComponent implements OnInit {
   constructor(private route: ActivatedRoute,private validationService: ValidationService, private registrarTarjeta: RegistrarTarjetaService,private router: Router) { }
 
   ngOnInit() {
-    
+
     const fields = [
       { key: 'name', selector: '.card__details-name', inputId: 'cardholder', errorSelector: '.form__cardholder--error' },
       { key: 'number', selector: '.card__number', inputId: 'cardNumber', errorSelector: '.form__inputnumber--error' },
@@ -79,18 +79,18 @@ export class TarjetaVisaComponent implements OnInit {
     });
   }
   checkboxChanged(event: any) {
-    this.nuevaTarjeta.autoRenewal = event.target.checked;
-    
-    if (this.nuevaTarjeta.autoRenewal) {
+    this.nuevaTarjeta.autorenewal = event.target.checked;
+
+    if (this.nuevaTarjeta.autorenewal) {
     } else {
     }
   }
-  
-  
+
+
   enviarDatos(): void {
+    this.nuevaTarjeta.holderemail = localStorage.getItem("email");
     console.log('Datos que se envían:', this.nuevaTarjeta);
-    this.registrarTarjeta.registrarTarjeta().subscribe({
-      
+    this.registrarTarjeta.registrarTarjeta(this.nuevaTarjeta).subscribe({
       next: (data) => {
         console.log('Respuesta recibida:', data);
         this.router.navigate(['/users']);
