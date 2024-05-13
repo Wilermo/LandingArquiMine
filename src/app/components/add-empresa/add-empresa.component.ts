@@ -54,14 +54,14 @@ export class AddEmpresaComponent {
 
   companyform = this.builder.group({
     nameCompany: this.builder.control('', Validators.required),
-    nit: this.builder.control('', Validators.required),
+    nit: this.builder.control(0, Validators.required),
     nameLegalRepresentative: this.builder.control('', Validators.required),
     email: this.builder.control('', Validators.compose([Validators.required, Validators.email])),
     phoneCompany: this.builder.control(0),
     numWorkers: this.builder.control(0),
     status: this.builder.control('', Validators.required),
     address: this.builder.control('', Validators.required),
-    linkDate: [new Date(), Validators.required],
+    linkDate: [new Date().toLocaleDateString('es-CO'), Validators.required],
     subscriptionEndDate: [new Date(), Validators.required],
   });
 
@@ -69,18 +69,22 @@ export class AddEmpresaComponent {
 
   SaveCompany() {
     if (this.companyform.valid) {
+
       const subscriptionEndDate: Date = this.companyform.value.subscriptionEndDate || new Date();
+      const publishDateValue = this.companyform.value.linkDate;
+      const currentDate = publishDateValue ? new Date(publishDateValue) : new Date();
 
       const companyData: company = {
         namecompany: this.companyform.value.nameCompany || '',
-        nit: this.companyform.value.nit || '',
+        nit: this.companyform.value.nit || -1,
         namelegalrepresentative: this.companyform.value.nameLegalRepresentative || '',
+        idlegalrepresentative: -1,
         email: this.companyform.value.email || '',
         phonecompany: this.companyform.value.phoneCompany || 0,
         numworkers: this.companyform.value.numWorkers || 0,
         status: this.companyform.value.status || '',
-        linkdate: new Date().toDateString(),
-        subscriptionenddate: subscriptionEndDate.toDateString(),
+        linkDate: currentDate.toJSON().slice(0, 10),
+        subscriptionEndDate: subscriptionEndDate.toJSON().slice(0, 10),
         address: this.companyform.value.address || '',
       };
 

@@ -12,6 +12,7 @@ import { User } from '../auth/user';
 export class CreateUserService {
 
   private apiUrl = 'https://canelaapigatewayback-qa.up.railway.app/user/save';
+
   constructor(private http: HttpClient) { }
 
   createUser(user: User): Observable<User> {

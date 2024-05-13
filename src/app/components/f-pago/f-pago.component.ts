@@ -50,6 +50,7 @@ export class FPagoComponent {
           confirmButtonColor: '#28a745',
         });
         console.log('ajaaaaaaaaaaaa',this.planId);
+        localStorage.setItem("email",this.nuevoUsuario.email)
         this.router.navigate(['/empresa'], { queryParams: { planId: this.planId } });
 
       },
