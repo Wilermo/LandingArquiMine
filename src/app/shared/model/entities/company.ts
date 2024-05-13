@@ -7,7 +7,7 @@ export interface company {
     phoneCompany: number;
     numWorkers: number;
     address: string;
-    linkDate: Date;
-    subscriptionEndDate: Date;
+    linkDate: string;
+    subscriptionEndDate: string;
     status: string;
 }
