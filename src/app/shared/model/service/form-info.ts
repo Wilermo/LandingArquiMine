@@ -1,9 +1,9 @@
 export class FormInfo {
   constructor(
-    public formName: string | undefined,
-    public cellphone: string | undefined,
+    public nombre: string | undefined,
+    public phonecontact: string | undefined,
     public email: string | undefined,
-    public message: string | undefined
+    public menssage: string | undefined
   ) {
   }
 }
