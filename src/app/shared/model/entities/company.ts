@@ -7,7 +7,7 @@ export interface company {
     phonecompany: number;
     numworkers: number;
     address: string;
-    linkdate: string;
-    subscriptionenddate: string;
+    linkDate: string;
+    subscriptionEndDate: string;
     status: string;
 }
