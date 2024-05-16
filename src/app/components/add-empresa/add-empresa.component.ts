@@ -75,13 +75,13 @@ export class AddEmpresaComponent {
       const currentDate = publishDateValue ? new Date(publishDateValue) : new Date();
 
       const companyData: company = {
-        namecompany: this.companyform.value.nameCompany || '',
+        nameCompany: this.companyform.value.nameCompany || '',
         nit: this.companyform.value.nit || -1,
-        namelegalrepresentative: this.companyform.value.nameLegalRepresentative || '',
-        idlegalrepresentative: -1,
+        nameLegalRepresentative: this.companyform.value.nameLegalRepresentative || '',
+        idLegalRepresentative: -1,
         email: this.companyform.value.email || '',
-        phonecompany: this.companyform.value.phoneCompany || 0,
-        numworkers: this.companyform.value.numWorkers || 0,
+        phoneCompany: this.companyform.value.phoneCompany || 0,
+        numWorkers: this.companyform.value.numWorkers || 0,
         status: this.companyform.value.status || '',
         linkDate: currentDate.toJSON().slice(0, 10),
         subscriptionEndDate: subscriptionEndDate.toJSON().slice(0, 10),
