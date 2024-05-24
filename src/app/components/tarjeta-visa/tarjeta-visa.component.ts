@@ -4,6 +4,8 @@ import { Card } from 'src/app/shared/model/entities/card';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { RegistrarTarjetaService } from 'src/app/shared/model/service/registrarTarjeta.service';
+import Swal from "sweetalert2";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-tarjeta-visa',
@@ -79,23 +81,39 @@ export class TarjetaVisaComponent implements OnInit {
     });
   }
   checkboxChanged(event: any) {
-    this.nuevaTarjeta.autorenewal = event.target.checked;
-
-    if (this.nuevaTarjeta.autorenewal) {
-    } else {
+    if(event.target.checked){
+      this.nuevaTarjeta.autoRenewal = 1;
+    }else{
+      this.nuevaTarjeta.autoRenewal = 0;
     }
   }
-
-
   enviarDatos(): void {
-    this.nuevaTarjeta.holderemail = localStorage.getItem("email");
+    this.nuevaTarjeta.holderEmail = localStorage.getItem("email");
     console.log('Datos que se envían:', this.nuevaTarjeta);
     this.registrarTarjeta.registrarTarjeta(this.nuevaTarjeta).subscribe({
       next: (data) => {
         console.log('Respuesta recibida:', data);
-        this.router.navigate(['/users']);
+        Swal.fire({
+          icon: 'success',
+          title: 'Gestión de cuentas',
+          text: "Listo, cuenta creada correctamente y pago realizado!",
+          confirmButtonText: '¡Comencemos!',
+          confirmButtonColor: '#2E575A',
+        }).then(
+          x => window.location.href = environment.loginEmpresa
+        )
       },
       error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Gestión de cuentas',
+          text: "Error al crear cuenta",
+          confirmButtonText: 'Volver a intentar',
+          confirmButtonColor: '#2E575A',
+        }).then(
+          x =>  this.router.navigate([""])
+
+        );
         console.error('Error al enviar datos:', err);
       }
     });

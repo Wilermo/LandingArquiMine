@@ -25,11 +25,11 @@
     <section class="main-container__form-section">
       <form class="form" action="">
         <label class="form__label" for="cardholder">Nombre que aparece en la tarjeta</label>
-        <input class="form__input" type="text" [(ngModel)]="nuevaTarjeta.cardholder" name="cardholder" id="cardholder" placeholder="e.g. Laura Moreno">
+        <input class="form__input" type="text" [(ngModel)]="nuevaTarjeta.cardHolder" name="cardholder" id="cardholder" placeholder="e.g. Laura Moreno">
         <div class="form__cardholder--error error"></div>
 
         <label class="form__label" for="cardNumber">Número de tarjeta</label>
-        <input class="form__input" type="text" [(ngModel)]="nuevaTarjeta.cardnumber" name="cardNumber" id="cardNumber" maxlength="19" placeholder="e.g. 1234 5678 9123 0000">
+        <input class="form__input" type="text" [(ngModel)]="nuevaTarjeta.cardNumber" name="cardNumber" id="cardNumber" maxlength="19" placeholder="e.g. 1234 5678 9123 0000">
         <div class="form__inputnumber--error error"></div>
 
         <div class="form__date-cvc">
@@ -39,13 +39,13 @@
           <label class="form__label" for="cardCvc">CVC</label>
 
           <div class="form__date">
-            <input class="form__input" type="text" maxlength="2" [(ngModel)]="nuevaTarjeta.cardmonth" name="cardMonth" id="cardMonth" placeholder="MM">
-            <input class="form__input" type="text" maxlength="2" [(ngModel)]="nuevaTarjeta.cardyear" name="cardYear" id="cardYear" placeholder="YY">
+            <input class="form__input" type="text" maxlength="2" [(ngModel)]="nuevaTarjeta.cardMonth" name="cardMonth" id="cardMonth" placeholder="MM">
+            <input class="form__input" type="text" maxlength="2" [(ngModel)]="nuevaTarjeta.cardYear" name="cardYear" id="cardYear" placeholder="YY">
           </div>
 
-          <input class="form__input" type="text" maxlength="3" [(ngModel)]="nuevaTarjeta.cardcvc" name="cardCvc" id="cardCvc" placeholder="e.g. 123">
+          <input class="form__input" type="text" maxlength="3" [(ngModel)]="nuevaTarjeta.cardCvc" name="cardCvc" id="cardCvc" placeholder="e.g. 123">
           <div class="mb-3 form-check">
-            <input type="checkbox" class="form-input" id="exampleCheck1" name="autoREnewal" [(ngModel)]="nuevaTarjeta.autorenewal" (change)="checkboxChanged($event)">
+            <input type="checkbox" class="form-input" id="exampleCheck1" name="autoREnewal" [(ngModel)]="nuevaTarjeta.autoRenewal" (change)="checkboxChanged($event)">
             <label class="form-check-label" for="exampleCheck1"> ¿Renovación automática?</label>
           </div>
 

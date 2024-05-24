@@ -33,6 +33,7 @@ export class FPagoComponent {
         console.log("Respuesta del servidor:", data);
         const usuario = data;
         this.nuevoUsuario.username = data
+        this.nuevoUsuario.email = data
 
         this.userService.agregarUsuario(this.nuevoUsuario).subscribe(
           response => {

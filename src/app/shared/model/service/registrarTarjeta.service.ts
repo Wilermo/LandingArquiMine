@@ -22,6 +22,6 @@ export class RegistrarTarjetaService {
   // }
 
   registrarTarjeta(card: Card): Observable<any> {
-    return this.http.post<Card>(`https://canelaapigatewayback-qa.up.railway.app/card/save`, card);
+    return this.http.post<Card>(`http://localhost:8082/card/save`, card);
   }
 }

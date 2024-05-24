@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { company } from 'src/app/shared/model/entities/company';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -13,9 +13,11 @@ import { Router } from '@angular/router';
   templateUrl: './add-empresa.component.html',
   styleUrls: ['./add-empresa.component.css']
 })
-export class AddEmpresaComponent {
+export class AddEmpresaComponent implements OnInit{
   estados = ['Active', 'Inactive'];
   plan: plan | undefined;
+
+  planId : string | undefined;
   constructor(private builder: FormBuilder, private companyService: CompanyService,
     private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router,
     private planService: PlanServiceService) { }
@@ -25,6 +27,7 @@ export class AddEmpresaComponent {
     this.route.queryParams.subscribe(params => {
       const planId = params['planId'];
       console.log('Plan ID:', planId);
+      this.planId = planId;
 
       // Obtener el plan por ID
       if (planId) {
@@ -73,6 +76,10 @@ export class AddEmpresaComponent {
       const subscriptionEndDate: Date = this.companyform.value.subscriptionEndDate || new Date();
       const publishDateValue = this.companyform.value.linkDate;
       const currentDate = publishDateValue ? new Date(publishDateValue) : new Date();
+      let planNumberId :number|undefined;
+      if(this.planId != undefined){
+        planNumberId = +this.planId
+      }
 
       const companyData: company = {
         nameCompany: this.companyform.value.nameCompany || '',
@@ -86,6 +93,7 @@ export class AddEmpresaComponent {
         linkDate: currentDate.toJSON().slice(0, 10),
         subscriptionEndDate: subscriptionEndDate.toJSON().slice(0, 10),
         address: this.companyform.value.address || '',
+        planId: planNumberId
       };
 
       this.companyService.agregarCompany(companyData).subscribe(

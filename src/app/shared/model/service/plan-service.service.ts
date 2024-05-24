@@ -7,7 +7,7 @@ import { plan } from '../entities/plan';
   providedIn: 'root'
 })
 export class PlanServiceService {
-  private apiUrl = 'https://canelaapigatewayback-qa.up.railway.app/plan/list';
+  private apiUrl = 'http://localhost:8082/plan/list';
   constructor(private http: HttpClient) { }
 
   getPlanes(): Observable<plan[]> {
