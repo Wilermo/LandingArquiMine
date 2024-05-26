@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { PlanServiceService } from 'src/app/shared/model/service/plan-service.service';
 import { plan } from 'src/app/shared/model/entities/plan';
 import { Router } from '@angular/router';
+import {Employee} from "../../shared/model/entities/employee";
+import {CreateUserService} from "../../shared/model/service/create-user.service";
 
 @Component({
   selector: 'app-add-empresa',
@@ -20,7 +22,8 @@ export class AddEmpresaComponent implements OnInit{
   planId : string | undefined;
   constructor(private builder: FormBuilder, private companyService: CompanyService,
     private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router,
-    private planService: PlanServiceService) { }
+    private planService: PlanServiceService,
+              private userService :  CreateUserService) { }
 
   ngOnInit(): void {
 
@@ -98,7 +101,39 @@ export class AddEmpresaComponent implements OnInit{
 
       this.companyService.agregarCompany(companyData).subscribe(
         response => {
-          console.log('Empresa agregado correctamente:', companyData);
+          let compañiaCreada : company = response;
+          console.log('Empresa agregado correctamente:', compañiaCreada);
+          let companyId : number = 0;
+          let companyIdStr = compañiaCreada.id;
+          if(companyIdStr!=null){
+            companyId = +companyIdStr;
+          }
+          let firstName : string | null = localStorage.getItem("firstName")
+          let lastName : string | null = localStorage.getItem("lastName")
+          let username : string | null = localStorage.getItem("username")
+
+          let empleado = new Employee(
+            -1,
+            firstName,
+            lastName,
+            "",
+            -1,
+            -1,
+            -1,
+            -1,
+            companyId,
+            "",
+            username,
+            0,
+            ""
+          );
+          console.log(empleado);
+          this.userService.agregarEmpleado(empleado).subscribe(response => {
+              console.log('Empleado agregado correctamente:', response);
+            },
+            error => {
+              console.error('Error al agregar Empleado:', error);
+            });
           this.router.navigate(['/metodo']);
         },
         error => {

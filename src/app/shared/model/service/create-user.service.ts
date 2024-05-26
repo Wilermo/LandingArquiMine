@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { User } from '../auth/user';
+import {Employee} from "../entities/employee";
 
 
 @Injectable({
@@ -11,7 +12,7 @@ import { User } from '../auth/user';
 })
 export class CreateUserService {
 
-  private apiUrl = 'https://canelaapigatewayback-qa.up.railway.app/user/save';
+  private apiUrl = 'https://canelausermanagementmicroservice-qa.up.railway.app/user/save';
 
   constructor(private http: HttpClient) { }
 
@@ -26,5 +27,11 @@ export class CreateUserService {
 
   agregarUsuario(usuario: User): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, usuario);
+  }
+
+  agregarEmpleado(empleado: Employee) {
+    //return this.http.post<any>(`https://empresasnominamicroservice-qa.up.railway.app/employee/createEmployee`, empleado);
+    return this.http.post<any>(`http://localhost:8080/employee/createEmployee`, empleado);
+
   }
 }

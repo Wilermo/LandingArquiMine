@@ -5,6 +5,7 @@ import { CreateUserService } from 'src/app/shared/model/service/create-user.serv
 import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import {Employee} from "../../shared/model/entities/employee";
 
 @Component({
   selector: 'app-f-pago',
@@ -43,6 +44,11 @@ export class FPagoComponent {
             console.error('Error al agregar Usuario:', error);
           }
         );
+        localStorage.setItem("firstName",this.nuevoUsuario.firstName);
+        localStorage.setItem("lastName",this.nuevoUsuario.lastName);
+        localStorage.setItem("username",this.nuevoUsuario.username);
+
+
         Swal.fire({
           icon: 'success',
           title: 'Usuario creado exitosamente',
