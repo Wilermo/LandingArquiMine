@@ -29,55 +29,22 @@ export class FPagoComponent {
   });
   }
   enviarDatos(): void {
-    this.userService.createUser(this.nuevoUsuario).subscribe(
-      (data: any) => {
-        console.log("Respuesta del servidor:", data);
-        const usuario = data;
-        this.nuevoUsuario.username = data
-        this.nuevoUsuario.email = data
-
-        this.userService.agregarUsuario(this.nuevoUsuario).subscribe(
-          response => {
-            console.log('Usuario agregado correctamente:', response);
-          },
-          error => {
-            console.error('Error al agregar Usuario:', error);
-          }
-        );
-        localStorage.setItem("firstName",this.nuevoUsuario.firstName);
-        localStorage.setItem("lastName",this.nuevoUsuario.lastName);
-        localStorage.setItem("username",this.nuevoUsuario.username);
-
-
-        Swal.fire({
-          icon: 'success',
-          title: 'Usuario creado exitosamente',
-          text: `El usuario es: ${usuario}`,
-          confirmButtonText: 'Aceptar',
-          confirmButtonColor: '#28a745',
-        });
-        console.log('ajaaaaaaaaaaaa',this.planId);
-        localStorage.setItem("email",this.nuevoUsuario.email)
-        this.router.navigate(['/empresa'], { queryParams: { planId: this.planId } });
-
-      },
-      (error: any) => {
-        console.error("Error en la suscripción:", error);
-        let code: number | undefined = error.status
-          ? Math.round(error.status / 100) * 100
-          : undefined;
-        if (code && code in this.error_dict) {
-          this.error_message = this.error_dict[code];
-        }
-        this.error = true;
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al crear cuenta',
-          text: this.error_message,
-          confirmButtonText: 'Aceptar',
-          confirmButtonColor: '#AA2535',
-        });
+    if(this.nuevoUsuario.firstName && this.nuevoUsuario.lastName && this.nuevoUsuario.email){
+      localStorage.setItem("firstName",this.nuevoUsuario.firstName);
+      localStorage.setItem("lastName",this.nuevoUsuario.lastName);
+      localStorage.setItem("email",this.nuevoUsuario.email);
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Llene todos los datos e inténtelo nuevamente',
+        text: this.error_message,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#AA2535',
       });
+    }
+
+    //localStorage.setItem("username",this.nuevoUsuario.username);
+
   }
 
   confirmar() {
