@@ -1,11 +1,13 @@
 export class User {
     public id?: string | null = null;
-    public firstName: string = '';
-    public lastName: string = '';
-    public email: string = '';
+    public firstName: string | null = '';
+    public lastName: string | null = '';
+    public email: string  | null = '';
     public username: string = '';
     public password: string = '';
     public role: string = 'ADMIN';
+
+    public companyid : number = 0;
 
     constructor();
     constructor(firstName: string, lastName: string, email: string, role: string, id?: string, username?: string, password?: string);

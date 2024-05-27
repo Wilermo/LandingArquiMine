@@ -9,6 +9,8 @@ import { plan } from 'src/app/shared/model/entities/plan';
 import { Router } from '@angular/router';
 import {Employee} from "../../shared/model/entities/employee";
 import {CreateUserService} from "../../shared/model/service/create-user.service";
+import Swal from "sweetalert2";
+import {User} from "../../shared/model/auth/user";
 
 @Component({
   selector: 'app-add-empresa',
@@ -18,6 +20,14 @@ import {CreateUserService} from "../../shared/model/service/create-user.service"
 export class AddEmpresaComponent implements OnInit{
   estados = ['Active', 'Inactive'];
   plan: plan | undefined;
+  error: boolean = false;
+
+  error_dict: { [key: number]: string } = {
+    400: 'Correo ya existente en el sistema',
+    500: 'Error del servidor',
+  };
+  error_message: string = '';
+
 
   planId : string | undefined;
   constructor(private builder: FormBuilder, private companyService: CompanyService,
@@ -110,7 +120,60 @@ export class AddEmpresaComponent implements OnInit{
           }
           let firstName : string | null = localStorage.getItem("firstName")
           let lastName : string | null = localStorage.getItem("lastName")
-          let username : string | null = localStorage.getItem("username")
+          let email = localStorage.getItem("email");
+
+          let nuevoUsuario: User = new User();
+          nuevoUsuario.firstName = firstName;
+          nuevoUsuario.lastName = lastName;
+          nuevoUsuario.email = email;
+          nuevoUsuario.companyid = companyId;
+
+
+          this.userService.createUser(nuevoUsuario).subscribe(
+            (data: any) => {
+              console.log("Respuesta del servidor:", data);
+              const usuario = data;
+              nuevoUsuario.username = data
+              nuevoUsuario.email = data
+
+              this.userService.agregarUsuario(nuevoUsuario).subscribe(
+                response => {
+                  console.log('Usuario agregado correctamente:', response);
+                },
+                error => {
+                  console.error('Error al agregar Usuario:', error);
+                }
+              );
+
+              Swal.fire({
+                icon: 'success',
+                title: 'Usuario creado exitosamente',
+                text: `El usuario es: ${usuario}`,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#28a745',
+              });
+              console.log('ajaaaaaaaaaaaa',this.planId);
+              //localStorage.setItem("email",nuevoUsuario.email)
+              this.router.navigate(['/empresa'], { queryParams: { planId: this.planId } });
+
+            },
+            (error: any) => {
+              console.error("Error en la suscripción:", error);
+              let code: number | undefined = error.status
+                ? Math.round(error.status / 100) * 100
+                : undefined;
+              if (code && code in this.error_dict) {
+                this.error_message = this.error_dict[code];
+              }
+              this.error = true;
+              Swal.fire({
+                icon: 'error',
+                title: 'Error al crear cuenta',
+                text: this.error_message,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#AA2535',
+              });
+            });
 
           let empleado = new Employee(
             -1,
@@ -123,7 +186,7 @@ export class AddEmpresaComponent implements OnInit{
             -1,
             companyId,
             "",
-            username,
+            nuevoUsuario.username,
             0,
             ""
           );
