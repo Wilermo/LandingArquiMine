@@ -8,6 +8,6 @@ import { environment } from 'src/environments/environment';
 })
 export class FooterComponent {
   redirigirAOtroProyecto() {
-    window.location.href = "https://canelaplatformfront-qa.up.railway.app";
+    window.location.href = "https://canelaplatformfront-production.up.railway.app/";
   }
 }
