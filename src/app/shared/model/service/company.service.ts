@@ -8,7 +8,8 @@ import { Observable, of } from 'rxjs';
 })
 export class CompanyService {
 
-  private apiUrl = 'http://localhost:8082/api/talentsoft/company/save';
+
+  private apiUrl = 'https://canelaaccounmanagermicroservice-qa.up.railway.app/api/talentsoft/company/save';
   constructor(private http: HttpClient) { }
 
 
