@@ -11,4 +11,6 @@ export interface company {
   linkDate: string;
   subscriptionEndDate: string;
   status: string;
+
+  planId: number | undefined;
 }

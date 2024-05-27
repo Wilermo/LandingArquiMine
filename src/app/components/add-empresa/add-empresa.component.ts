@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { company } from 'src/app/shared/model/entities/company';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,24 +7,30 @@ import { ActivatedRoute } from '@angular/router';
 import { PlanServiceService } from 'src/app/shared/model/service/plan-service.service';
 import { plan } from 'src/app/shared/model/entities/plan';
 import { Router } from '@angular/router';
+import {Employee} from "../../shared/model/entities/employee";
+import {CreateUserService} from "../../shared/model/service/create-user.service";
 
 @Component({
   selector: 'app-add-empresa',
   templateUrl: './add-empresa.component.html',
   styleUrls: ['./add-empresa.component.css']
 })
-export class AddEmpresaComponent {
+export class AddEmpresaComponent implements OnInit{
   estados = ['Active', 'Inactive'];
   plan: plan | undefined;
+
+  planId : string | undefined;
   constructor(private builder: FormBuilder, private companyService: CompanyService,
     private snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router,
-    private planService: PlanServiceService) { }
+    private planService: PlanServiceService,
+              private userService :  CreateUserService) { }
 
   ngOnInit(): void {
 
     this.route.queryParams.subscribe(params => {
       const planId = params['planId'];
       console.log('Plan ID:', planId);
+      this.planId = planId;
 
       // Obtener el plan por ID
       if (planId) {
@@ -73,6 +79,10 @@ export class AddEmpresaComponent {
       const subscriptionEndDate: Date = this.companyform.value.subscriptionEndDate || new Date();
       const publishDateValue = this.companyform.value.linkDate;
       const currentDate = publishDateValue ? new Date(publishDateValue) : new Date();
+      let planNumberId :number|undefined;
+      if(this.planId != undefined){
+        planNumberId = +this.planId
+      }
 
       const companyData: company = {
         nameCompany: this.companyform.value.nameCompany || '',
@@ -86,11 +96,44 @@ export class AddEmpresaComponent {
         linkDate: currentDate.toJSON().slice(0, 10),
         subscriptionEndDate: subscriptionEndDate.toJSON().slice(0, 10),
         address: this.companyform.value.address || '',
+        planId: planNumberId
       };
 
       this.companyService.agregarCompany(companyData).subscribe(
         response => {
-          console.log('Empresa agregado correctamente:', companyData);
+          let compañiaCreada : company = response;
+          console.log('Empresa agregado correctamente:', compañiaCreada);
+          let companyId : number = 0;
+          let companyIdStr = compañiaCreada.id;
+          if(companyIdStr!=null){
+            companyId = +companyIdStr;
+          }
+          let firstName : string | null = localStorage.getItem("firstName")
+          let lastName : string | null = localStorage.getItem("lastName")
+          let username : string | null = localStorage.getItem("username")
+
+          let empleado = new Employee(
+            -1,
+            firstName,
+            lastName,
+            "",
+            -1,
+            -1,
+            -1,
+            -1,
+            companyId,
+            "",
+            username,
+            0,
+            ""
+          );
+          console.log(empleado);
+          this.userService.agregarEmpleado(empleado).subscribe(response => {
+              console.log('Empleado agregado correctamente:', response);
+            },
+            error => {
+              console.error('Error al agregar Empleado:', error);
+            });
           this.router.navigate(['/metodo']);
         },
         error => {
